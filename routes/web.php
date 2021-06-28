@@ -24,6 +24,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin-view', 'App\Http\Controllers\HomeController@adminView')->name('admin.view');
+
+    Route::resource('companies', App\Http\Controllers\CompanyController::class);
+
+    Route::resource('employes', App\Http\Controllers\EmployeController::class);
 });
+
+
 
 
