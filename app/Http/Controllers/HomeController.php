@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Models\Employe;
 
+
 class HomeController extends Controller
 {
     /**
@@ -31,12 +32,8 @@ class HomeController extends Controller
 
     public function adminView()
     {
+        // $comments = Employe::find(1)->company;
         return view('admin-view');
     }
 
-    public function userView()
-    {
-        dd('def user');
-        return view('home');
-    }
 }

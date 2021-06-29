@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Employe;
 use App\Models\Company;
+use App\Jobs\SendEmail;
+use App\Models\User;
 
 class EmployeController extends Controller
 {
@@ -47,8 +49,17 @@ class EmployeController extends Controller
         ]);
 
         Employe::create($request->all());
+        $this->EmailNotify($request);
 
         return redirect()->route('employes.index')->with('success','Employe add successfully.');
+    }
+
+    protected function EmailNotify($request)
+    {
+        $user_emails = User::select('email')->get();
+        foreach($user_emails as $email){
+        SendEmail::dispatch($email->email,$request->all())->delay(now()->addMinutes(1));
+        }
     }
 
     /**
