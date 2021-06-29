@@ -48,4 +48,9 @@
         </tr>
         @endforeach
     </table>
+
+    <div class="d-flex justify-content-center">
+        {{ $employes->links() }}
+    </div>
+
 @endsection

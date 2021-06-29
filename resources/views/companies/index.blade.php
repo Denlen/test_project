@@ -51,4 +51,9 @@
         </tr>
         @endforeach
     </table>
+
+    <div class="d-flex justify-content-center">
+    {{ $companies->links() }}
+    </div>
+
 @endsection

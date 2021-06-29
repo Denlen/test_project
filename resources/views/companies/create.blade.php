@@ -22,10 +22,18 @@
     </div>
 @endif
 
-<form action="{{ route('companies.store') }}" method="POST">
+<form action="{{ route('companies.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
      <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Company logo:</strong>
+                    <input type="file" name="logo" class="form-control">
+                </div>
+            </div>
+
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Company Name:</strong>
@@ -52,13 +60,6 @@
                 <div class="form-group">
                     <strong>Website:</strong>
                     <input type="text" name="website" class="form-control" placeholder="Website">
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Company logo:</strong>
-                    <input type="text" name="logo" class="form-control" placeholder="Company logo">
                 </div>
             </div>
 

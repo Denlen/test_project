@@ -14,7 +14,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::all();
+        $companies = Company::paginate(16);
 
         return View('companies.index', compact('companies'));
     }
@@ -43,8 +43,15 @@ class CompanyController extends Controller
             'phone' => 'required',
             'website' => 'required',
         ]);
+        $input = $request->all();
 
-        Company::create($request->all());
+        if($request->hasFile('logo')){
+            $image = date('YmdHis') . "." .$request->file('logo')->getClientOriginalName();
+            $request->logo->storeAs('companies', $image, 'public');
+            $input['logo'] = $image;
+        }
+
+        Company::create($input);
 
         return redirect()->route('companies.index')->with('success','Company add successfully.');
     }
@@ -89,7 +96,15 @@ class CompanyController extends Controller
             'website' => 'required',
         ]);
 
-        $company->update($request->all());
+        $input = $request->all();
+
+        if($request->hasFile('logo')){
+            $image = date('YmdHis') . "." .$request->file('logo')->getClientOriginalName();
+            $request->logo->storeAs('companies', $image, 'public');
+            $input['logo'] = $image;
+        }
+
+        $company->update($input);
 
         return redirect()->route('companies.index')->with('success','company updated successfully');
     }

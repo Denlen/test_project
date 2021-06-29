@@ -14,40 +14,22 @@
 
     <div class="row">
 
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>First Name</strong>
-                {{ $employe->first_name }}
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Last Name:</strong>
-                {{ $employe->last_name }}
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Company:</strong>
-                {{ $employe->company->name }}
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Email:</strong>
-                {{ $employe->email }}
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Phone:</strong>
-                {{ $employe->phone }}
-            </div>
-        </div>
+        <table class="table table-bordered">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Company</th>
+                <th>Email</th>
+                <th>Phone</th>
+            </tr>
+            <tr>
+                <td>{{ $employe->first_name }}</td>
+                <td>{{ $employe->last_name }}</td>
+                <td>{{ $employe->company->name }}</td>
+                <td>{{ $employe->email }}</td>
+                <td>{{ $employe->phone }}</td>
+            </tr>
+        </table>
 
     </div>
 @endsection

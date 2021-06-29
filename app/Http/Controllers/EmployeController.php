@@ -15,7 +15,7 @@ class EmployeController extends Controller
      */
     public function index()
     {
-        $employes = Employe::all();
+        $employes = Employe::paginate(16);
         return View('employes.index', compact('employes'));
     }
 
@@ -26,7 +26,8 @@ class EmployeController extends Controller
      */
     public function create()
     {
-        return view('employes.create');
+        $companies_name = Company::select('id','name')->get();
+        return view('employes.create',compact('companies_name'));
     }
 
     /**
@@ -37,12 +38,13 @@ class EmployeController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => 'required',
-        //     'email' => 'required',
-        //     'phone' => 'required',
-        //     'website' => 'required',
-        // ]);
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'company_id' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+        ]);
 
         Employe::create($request->all());
 
@@ -82,12 +84,13 @@ class EmployeController extends Controller
      */
     public function update(Request $request, Employe $employe)
     {
-        // $request->validate([
-        //     'name' => 'required',
-        //     'email' => 'required',
-        //     'phone' => 'required',
-        //     'website' => 'required',
-        // ]);
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'company_id' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+        ]);
 
         $employe->update($request->all());
 

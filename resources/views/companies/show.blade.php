@@ -17,7 +17,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Logo:</strong>
-                {{ $company->logo }}
+                <img src="/storage/companies/{{ $company->logo }}" alt="" class="img-thumbnail" style="width: 200px; height: 200px;">
             </div>
         </div>
 
@@ -48,6 +48,6 @@
                 {{ $company->website }}
             </div>
         </div>
-
     </div>
+
 @endsection
