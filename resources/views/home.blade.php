@@ -13,7 +13,6 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <a href="{{route('admin.view')}}">Admin View</a>
                     {{ __('You are logged in!') }}
                 </div>
             </div>
