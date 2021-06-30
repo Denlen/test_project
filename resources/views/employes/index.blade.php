@@ -19,6 +19,11 @@
         </div>
     @endif
 
+    {{-- <div class="row">
+        <form action="{{ route('employes.index',$employe->id) }}" method="POST">
+        </form>
+    </div> --}}
+
     <table class="table table-bordered">
         <tr>
             <th>First Name</th>

@@ -15,9 +15,15 @@ class EmployeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $employes = Employe::paginate(16);
+        if(request()->input('q') === null)
+        {
+            $employes = Employe::paginate(16);
+        }else{
+            $employes = Employe::orWhere('first_name', 'LIKE', '%brady%')->paginate(16);
+        }
+
         return View('employes.index', compact('employes'));
     }
 
