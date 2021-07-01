@@ -41,7 +41,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex justify-content-between">
 
-        <div class="info d-flex d-flex align-items-center justify-content-around w-100">
+        <div class="info d-flex align-items-center justify-content-around w-100">
           <a href="#" >{{ Auth::user()->name }}</a>
           <a class="btn btn-info text-white" href="{{ route('logout') }}"
             onclick="event.preventDefault();

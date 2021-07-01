@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
+use App\Imports\CompanyEmployesImport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\CompanyEmployesExport;
 
 class CompanyController extends Controller
 {
@@ -87,6 +90,19 @@ class CompanyController extends Controller
                 // $companies = Company::find(1)->companies;
         // echo $companies;
         return view('companies.show',compact('company'));
+    }
+
+    public function import(Request $request, $id)
+    {
+        Excel::import(new CompanyEmployesImport, $request->file('import'));
+
+        return redirect('/employes')->with('success', 'Import was successful');
+    }
+
+    public function export(Request $request, $id,$format)
+    {
+        $company_name = Company::find($id)->name;
+        return Excel::download(new CompanyEmployesExport($id), 'EmployesOf'.$company_name.'.'.$format.'');
     }
 
     /**

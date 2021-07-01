@@ -68,8 +68,8 @@
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                <a class="btn btn-success" href="{{ route('employes.index') }}"> Clear</a>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <a class="btn btn-success m-2" href="{{ route('employes.index') }}"> Clear</a>
+                <button type="submit" class="btn btn-primary m-2">Submit</button>
             </div>
         </form>
     </div>

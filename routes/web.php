@@ -29,6 +29,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::resource('companies', App\Http\Controllers\CompanyController::class);
 
+    Route::post('/companies/import/{id}', 'App\Http\Controllers\CompanyController@import');
+
+    Route::get('/companies/export/{id}/{format}', 'App\Http\Controllers\CompanyController@export');
+
     Route::resource('employes', App\Http\Controllers\EmployeController::class);
 });
 
