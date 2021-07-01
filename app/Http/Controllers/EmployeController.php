@@ -8,6 +8,8 @@ use App\Models\Company;
 use App\Jobs\SendEmail;
 use App\Models\User;
 
+use function PHPUnit\Framework\isNull;
+
 class EmployeController extends Controller
 {
      /**
@@ -17,14 +19,35 @@ class EmployeController extends Controller
      */
     public function index(Request $request)
     {
-        if(request()->input('q') === null)
-        {
-            $employes = Employe::paginate(16);
-        }else{
-            $employes = Employe::orWhere('first_name', 'LIKE', '%brady%')->paginate(16);
+        $queryEmployes = Employe::query();
+
+        if(!is_null(request()->input('first_name'))) {
+            $queryEmployes->where('first_name', 'like', '%' . request()->input('first_name') . '%');
         }
 
-        return View('employes.index', compact('employes'));
+        if(!is_null(request()->input('last_name'))) {
+            $queryEmployes->where('last_name', 'like', '%' . request()->input('last_name') . '%');
+
+        }
+
+        if(!is_null(request()->input('company_id'))) {
+            $queryEmployes->where('company_id', request()->input('company_id'));
+        }
+
+        if(!is_null(request()->input('email'))) {
+            $queryEmployes->where('email', 'like', '%' . request()->input('email') . '%');
+
+        }
+
+        if(!is_null(request()->input('phone'))) {
+            $queryEmployes->where('phone', 'like', '%' . request()->input('phone') . '%');
+
+        }
+
+        $employes = $queryEmployes->paginate(16);
+
+        $companies_name = Company::select('id','name')->get();
+        return View('employes.index', compact('employes','companies_name'));
     }
 
     /**
@@ -88,7 +111,6 @@ class EmployeController extends Controller
     public function edit(Employe $employe)
     {
         $companies_name = Company::select('id','name')->get();
-        // echo $companies_name;
         return view('employes.edit',compact('employe','companies_name'));
     }
 

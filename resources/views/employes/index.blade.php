@@ -7,7 +7,7 @@
             <div class="pull-left">
                 <h2>Employes </h2>
             </div>
-            <div class="pull-right">
+            <div class="pull-right p-2">
                 <a class="btn btn-success" href="{{ route('employes.create') }}"> Add New Employe</a>
             </div>
         </div>
@@ -19,10 +19,60 @@
         </div>
     @endif
 
-    {{-- <div class="row">
-        <form action="{{ route('employes.index',$employe->id) }}" method="POST">
+    <div class="row p-2">
+
+        <form action="{{ route('employes.index') }}" method="GET" style="border:1px solid black">
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>First Name:</strong>
+                    <input type="text" name="first_name" class="form-control" placeholder="First Name " value="{{request()->input('first_name')}}">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Last Name:</strong>
+                    <input type="text" name="last_name" class="form-control" placeholder="Last Name" value="{{request()->input('last_name')}}">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Company:</strong>
+                    <select class="form-control" name="company_id">
+                        <option selected value="">Виберіть Компанію</option>
+                    @foreach($companies_name as $company_name)
+                    @if ($company_name->id == request()->input('company_id'))
+                        <option selected value="{{ $company_name->id }}">{{$company_name->name}}</option>
+                    @else
+                        <option value="{{ $company_name->id }}">{{$company_name->name}}</option>
+                    @endif
+                    @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Email:</strong>
+                    <input type="text" name="email" class="form-control" placeholder="Email" value="{{request()->input('email')}}">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Phone:</strong>
+                    <input type="text" name="phone" class="form-control" placeholder="Phone" value="{{request()->input('phone')}}">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                <a class="btn btn-success" href="{{ route('employes.index') }}"> Clear</a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
         </form>
-    </div> --}}
+    </div>
 
     <table class="table table-bordered">
         <tr>

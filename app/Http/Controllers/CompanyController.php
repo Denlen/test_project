@@ -14,7 +14,27 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::paginate(16);
+        $queryCompanies = Company::query();
+
+        if(!is_null(request()->input('name'))) {
+            $queryCompanies->where('name', 'like', '%' . request()->input('name') . '%');
+        }
+
+        if(!is_null(request()->input('email'))) {
+            $queryCompanies->where('email', 'like', '%' . request()->input('email') . '%');
+
+        }
+
+        if(!is_null(request()->input('phone'))) {
+            $queryCompanies->where('phone', 'like', '%' . request()->input('phone') . '%');
+        }
+
+        if(!is_null(request()->input('website'))) {
+            $queryCompanies->where('website', 'like', '%' . request()->input('website') . '%');
+        }
+
+        $companies = $queryCompanies->paginate(16);
+
 
         return View('companies.index', compact('companies'));
     }
@@ -64,8 +84,8 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-                // $employes = Company::find(1)->employes;
-        // echo $employes;
+                // $companies = Company::find(1)->companies;
+        // echo $companies;
         return view('companies.show',compact('company'));
     }
 

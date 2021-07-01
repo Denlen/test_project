@@ -24,6 +24,45 @@
         </div>
     @endif
 
+    <div class="row p-2">
+
+        <form action="{{ route('companies.index') }}" method="GET" style="border:1px solid black">
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Name:</strong>
+                    <input type="text" name="name" class="form-control" placeholder="Name " value="{{request()->input('name')}}">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Email:</strong>
+                    <input type="text" name="email" class="form-control" placeholder="Email" value="{{request()->input('email')}}">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Phone:</strong>
+                    <input type="text" name="phone" class="form-control" placeholder="Phone" value="{{request()->input('phone')}}">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Website:</strong>
+                    <input type="text" name="website" class="form-control" placeholder="Website" value="{{request()->input('website')}}">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                <a class="btn btn-success" href="{{ route('companies.index') }}"> Clear</a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
     <table class="table table-bordered">
         <tr>
             <th>Name</th>
