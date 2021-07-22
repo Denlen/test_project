@@ -46,11 +46,11 @@
                     <strong>Company:</strong>
 
                     <select class="form-control" name="company_id">
-                    @foreach($companies_name as $company_name)
-                    @if ($company_name->name === $employe->company->name)
-                        <option selected value="{{ $company_name->id }}">{{$company_name->name}}</option>
+                    @foreach($companiesName as $companyName)
+                    @if ($companyName->name === $employe->companycompanyNamename)
+                        <option selected value="{{ $companyName->id }}">{{$companyName->name}}</option>
                     @else
-                        <option value="{{ $company_name->id }}">{{$company_name->name}}</option>
+                        <option value="{{ $companyName->id }}">{{$companyName->name}}</option>
                     @endif
                     @endforeach
                     </select>

@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/companies', 'App\Http\Controllers\Api\CompanyController@company');
+Route::get('/companies', [App\Http\Controllers\Api\CompanyController::class, 'company']);
 
-Route::get('/company/employes/{id}', 'App\Http\Controllers\Api\CompanyController@employes');
+Route::get('/company/employes/{id}', [App\Http\Controllers\Api\CompanyController::class, 'employes']);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

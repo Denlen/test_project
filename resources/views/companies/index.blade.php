@@ -1,11 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-{{-- <div class="container">
-    <div class="row justify-content-center">
-
-    </div>
-</div> --}}
 
 <div class="row">
         <div class="col-lg-12 margin-tb">
@@ -31,28 +26,28 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Name:</strong>
-                    <input type="text" name="name" class="form-control" placeholder="Name " value="{{request()->input('name')}}">
+                    <input type="text" name="filter[name]" class="form-control" placeholder="Name " value="{{ !empty(request()->get('filter')['name']) ? request()->get('filter')['name'] : '' }}">
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Email:</strong>
-                    <input type="text" name="email" class="form-control" placeholder="Email" value="{{request()->input('email')}}">
+                    <input type="text" name="filter[email]" class="form-control" placeholder="Email" value="{{ !empty(request()->input('filter')['email']) ? request()->get('filter')['email'] : '' }}">
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Phone:</strong>
-                    <input type="text" name="phone" class="form-control" placeholder="Phone" value="{{request()->input('phone')}}">
+                    <input type="text" name="filter[phone]" class="form-control" placeholder="Phone" value="{{ !empty(request()->input('filter')['phone']) ? request()->get('filter')['phone'] : '' }}">
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Website:</strong>
-                    <input type="text" name="website" class="form-control" placeholder="Website" value="{{request()->input('website')}}">
+                    <input type="text" name="filter[website]" class="form-control" placeholder="Website" value="{{ !empty(request()->input('filter')['website']) ? request()->get('filter')['website'] : '' }}">
                 </div>
             </div>
 
@@ -92,7 +87,7 @@
     </table>
 
     <div class="d-flex justify-content-center">
-    {{ $companies->links() }}
+    {{ $companies->withQueryString()->links() }}
     </div>
 
 @endsection

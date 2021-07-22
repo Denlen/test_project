@@ -26,7 +26,6 @@ class CompanyFactory extends Factory
             'email' => $this->faker->freeEmail,
             'phone' => $this->faker->e164PhoneNumber,
             'website' => $this->faker->domainName,
-            'logo' => '222222',
         ];
     }
 }

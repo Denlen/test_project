@@ -11,6 +11,7 @@ class Employe extends Model
 
     public $timestamps = false;
 
+
     protected $fillable = [
         'first_name', 'last_name', 'company_id', 'email', 'phone'
     ];
@@ -18,6 +19,19 @@ class Employe extends Model
     public function company()
     {
         return $this->belongsTo('App\Models\Company');
+    }
+
+    public function scopeFilter($query, array $attrs = [])
+    {
+        foreach ($attrs as $key => $value) {
+            if ($value) {
+                if($value === 'company_id'){
+                    $query->where($key, $value);
+                }else{
+                    $query->where($key, 'like', '%' . $value . '%');
+                }
+            }
+        }
     }
 
 }

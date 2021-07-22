@@ -44,8 +44,8 @@
                 <div class="form-group">
                     <strong>Company:</strong>
                     <select class="form-control" name="company_id">
-                        @foreach($companies_name as $company_name)
-                            <option value="{{ $company_name->id }}">{{$company_name->name}}</option>
+                        @foreach($companiesName as $companyName)
+                            <option value="{{ $companyName->id }}">{{$companyName->name}}</option>
                         @endforeach
                     </select>
                 </div>

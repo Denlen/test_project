@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Company;
 use App\Models\Employe;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,10 +22,11 @@ class EmployeFactory extends Factory
      */
     public function definition()
     {
+        $c = Company::inRandomOrder()->first()->id;
         return [
             'first_name' => $this->faker->firstName($gender = 'male'|'female'),
             'last_name' => $this->faker->lastName,
-            'company_id' => $this->faker->numberBetween($min = 1, $max = 10),
+            'company_id' => $c,
             'email' => $this->faker->freeEmail,
             'phone' => $this->faker->e164PhoneNumber,
         ];

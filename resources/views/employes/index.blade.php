@@ -26,27 +26,27 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>First Name:</strong>
-                    <input type="text" name="first_name" class="form-control" placeholder="First Name " value="{{request()->input('first_name')}}">
+                    <input type="text" name="filter[first_name]" class="form-control" placeholder="First Name " value="{{ request()->input('filter.first_name') }}">
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Last Name:</strong>
-                    <input type="text" name="last_name" class="form-control" placeholder="Last Name" value="{{request()->input('last_name')}}">
+                    <input type="text" name="filter[last_name]" class="form-control" placeholder="Last Name" value="{{ !empty(request()->get('filter')['last_name']) ? request()->get('filter')['last_name'] : '' }}">
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Company:</strong>
-                    <select class="form-control" name="company_id">
+                    <select class="form-control" name="filter[company_id]">
                         <option selected value="">Виберіть Компанію</option>
-                    @foreach($companies_name as $company_name)
-                    @if ($company_name->id == request()->input('company_id'))
-                        <option selected value="{{ $company_name->id }}">{{$company_name->name}}</option>
+                    @foreach($companiesName as $companyName)
+                    @if ($companyName->id == !empty(request()->get('filter')['company_id']) ? request()->get('filter')['company_id'] : ''))
+                        <option selected value="{{ $companyName->id }}">{{$companyName->name}}</option>
                     @else
-                        <option value="{{ $company_name->id }}">{{$company_name->name}}</option>
+                        <option value="{{ $companyName->id }}">{{$companyName->name}}</option>
                     @endif
                     @endforeach
                     </select>
@@ -56,14 +56,14 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Email:</strong>
-                    <input type="text" name="email" class="form-control" placeholder="Email" value="{{request()->input('email')}}">
+                    <input type="text" name="filter[email]" class="form-control" placeholder="Email" value="{{ !empty(request()->get('filter')['email']) ? request()->get('filter')['email'] : '' }}">
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Phone:</strong>
-                    <input type="text" name="phone" class="form-control" placeholder="Phone" value="{{request()->input('phone')}}">
+                    <input type="text" name="filter[phone]" class="form-control" placeholder="Phone" value="{{ !empty(request()->get('filter')['phone']) ? request()->get('filter')['phone'] : '' }}">
                 </div>
             </div>
 
@@ -105,7 +105,7 @@
     </table>
 
     <div class="d-flex justify-content-center">
-        {{ $employes->links() }}
+        {{ $employes->withQueryString()->links() }}
     </div>
 
 @endsection

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CompanyRequest;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Imports\CompanyEmployesImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CompanyEmployesExport;
+
 
 class CompanyController extends Controller
 {
@@ -15,29 +18,9 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $queryCompanies = Company::query();
-
-        if(!is_null(request()->input('name'))) {
-            $queryCompanies->where('name', 'like', '%' . request()->input('name') . '%');
-        }
-
-        if(!is_null(request()->input('email'))) {
-            $queryCompanies->where('email', 'like', '%' . request()->input('email') . '%');
-
-        }
-
-        if(!is_null(request()->input('phone'))) {
-            $queryCompanies->where('phone', 'like', '%' . request()->input('phone') . '%');
-        }
-
-        if(!is_null(request()->input('website'))) {
-            $queryCompanies->where('website', 'like', '%' . request()->input('website') . '%');
-        }
-
-        $companies = $queryCompanies->paginate(16);
-
+        $companies = Company::filter($request->get('filter', []))->paginate(16);
 
         return View('companies.index', compact('companies'));
     }
@@ -58,23 +41,23 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    public function imageSave($request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'website' => 'required',
-        ]);
-        $input = $request->all();
-
         if($request->hasFile('logo')){
-            $image = date('YmdHis') . "." .$request->file('logo')->getClientOriginalName();
+            $image = date('YmdHis'). "." .$request->file('logo')->getClientOriginalName();
             $request->logo->storeAs('companies', $image, 'public');
-            $input['logo'] = $image;
+            return $image;
         }
+        return null;
+    }
 
-        Company::create($input);
+    public function store(CompanyRequest $request)
+    {
+        //TODO Action or Another logic
+        // echo($this->imageSave($request)->all());
+        $imageName = $this->imageSave($request);
+        Company::create($request->validated() + ['logo' => $imageName]);
 
         return redirect()->route('companies.index')->with('success','Company add successfully.');
     }
@@ -87,22 +70,28 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-                // $companies = Company::find(1)->companies;
-        // echo $companies;
         return view('companies.show',compact('company'));
     }
 
     public function import(Request $request, $id)
     {
+        $request->validate([
+            'import' => 'required|file',
+        ]);
         Excel::import(new CompanyEmployesImport, $request->file('import'));
 
-        return redirect('/employes')->with('success', 'Import was successful');
+        return redirect()->route('employes.index')->with('success', 'Import was successful');
     }
 
-    public function export(Request $request, $id,$format)
+    public function export(Request $request, $id)
     {
-        $company_name = Company::find($id)->name;
-        return Excel::download(new CompanyEmployesExport($id), 'EmployesOf'.$company_name.'.'.$format.'');
+        if(in_array($request->get('format'), ['csv', 'xlsx'])) {
+            $company_name = Company::findOrFail($id)->name;
+
+            return Excel::download(new CompanyEmployesExport($id), 'EmployesOf'.$company_name.'.'.$request->format.'');
+        }
+
+        abort(400);
     }
 
     /**
@@ -123,24 +112,10 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Company $company)
+    public function update(CompanyRequest $request, Company $company)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'website' => 'required',
-        ]);
-
-        $input = $request->all();
-
-        if($request->hasFile('logo')){
-            $image = date('YmdHis') . "." .$request->file('logo')->getClientOriginalName();
-            $request->logo->storeAs('companies', $image, 'public');
-            $input['logo'] = $image;
-        }
-
-        $company->update($input);
+        $imageName = $this->imageSave($request);
+        $company->update($request->validated() + ['logo' => $imageName]);
 
         return redirect()->route('companies.index')->with('success','company updated successfully');
     }
@@ -155,7 +130,7 @@ class CompanyController extends Controller
     {
         $company->delete();
 
-       return redirect()->route('companies.index')
+        return redirect()->route('companies.index')
                        ->with('success','Company deleted successfully');
     }
 }

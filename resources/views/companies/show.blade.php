@@ -53,7 +53,7 @@
         <div class="pull-left">
 
     <div class="row">
-        <form action="{{ url('companies/import/'.$company->id) }}" method="POST" enctype="multipart/form-data" style="border:1px solid black">
+        <form action="{{ url('companies/'.$company->id.'/import') }}" method="POST" enctype="multipart/form-data" style="border:1px solid black">
             @csrf
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
@@ -74,8 +74,8 @@
 
     <div class="pull-right">
     <div class="row">
-        <a class="btn btn-primary m-2" href="{{ url('companies/export/'.$company->id.'/xlsx') }}">Export xlsx</a>
-        <a class="btn btn-primary m-2" href="{{ url('companies/export/'.$company->id.'/csv') }}">Export csv</a>
+        <a class="btn btn-primary m-2" href="{{ route('companies.export', [$company,'format'=>'xlsx']) }}">Export xlsx</a>
+        <a class="btn btn-primary m-2" href="{{ route('companies.export', [$company,'format'=>'csv']) }}">Export csv</a>
     </div>
     </div>
 </div>

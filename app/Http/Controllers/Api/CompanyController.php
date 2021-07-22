@@ -15,18 +15,16 @@ class CompanyController extends Controller
     public function company()
     {
         $company = Company::all();
-        return new CompanyResource($company);
+        // dd($company);
+        return CompanyResource::collection($company);
     }
 
+    // TODO CR: Use Model binding, resource misused, hardcode
     public function employes($id)
     {
-        $employes = Company::find($id)->employes;
-        $company = Employe::find($employes->first()->id)->company;
-        foreach ($employes as $emploe)
-        {
-            $emploe['company'] = $company->name;
-        }
-        return new CompanyResource($employes);
+        $employes = Company::findOrFail($id)->employes()->with('company')->paginate();
+
+        return EmployeResource::collection($employes);
 
     }
 
